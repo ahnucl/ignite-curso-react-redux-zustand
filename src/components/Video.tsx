@@ -7,7 +7,7 @@ export function Video() {
         width="100%"
         height="100%"
         controls
-        url="https://www.youtube.com/watch?v=RNj5oxr7xfw&ab_channel=SpacePregui%C3%A7a"
+        url="https://www.youtube.com/watch?v=RNj5oxr7xfw"
       />
     </div>
   )
