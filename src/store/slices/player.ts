@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { useAppSelector } from '..'
 
-const playerSlice = createSlice({
+export const playerSlice = createSlice({
   name: 'player',
   initialState: {
     course: {
@@ -70,9 +70,10 @@ const playerSlice = createSlice({
       state.currentModuleIndex = action.payload[0]
       state.currentLessonIndex = action.payload[1]
     },
-    next: (state) => {
+    next: state => {
       const nextLessonIndex = state.currentLessonIndex + 1
-      const nextLesson = state.course.modules[state.currentModuleIndex].lessons[nextLessonIndex]
+      const nextLesson =
+        state.course.modules[state.currentModuleIndex].lessons[nextLessonIndex]
 
       if (nextLesson) {
         state.currentLessonIndex = nextLessonIndex
@@ -85,7 +86,7 @@ const playerSlice = createSlice({
           state.currentLessonIndex = 0
         }
       }
-    }
+    },
   },
 })
 
