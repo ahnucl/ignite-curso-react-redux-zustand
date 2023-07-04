@@ -13,7 +13,7 @@ export const playerSlice = createSlice({
             {
               id: 'RNj5oxr7xfw',
               title: 'Fundamentos do Redux',
-              duration: '09:"12',
+              duration: '09:12',
             },
             {
               id: 'w-DW4DhDfcw',
