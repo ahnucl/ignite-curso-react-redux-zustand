@@ -17,6 +17,8 @@ export function Player() {
     return modules
   })
 
+  const isCourseLoading = useAppSelector(state => state.player.isLoading)
+
   const { currentLesson } = useCurrentLesson()
 
   useEffect(() => {
@@ -48,7 +50,19 @@ export function Player() {
           </div>
 
           <aside className="w-80 absolute top-0 bottom-0 right-0 border-l divide-y-2 divide-zinc-900 border-zinc-800 bg-zinc-900 overflow-y-scroll scrollbar-thin scrollbar-track-zinc-950 scrollbar-thumb-zinc-800">
-            {modules &&
+            {isCourseLoading ? (
+              <div className="animate-pulse">
+                <div className="flex w-full items-center gap-3 bg-zinc-800 p-4">
+                  <div className="flex h-10 w-10 rounded-full items-center justify-center bg-zinc-700"></div>
+
+                  <div className="flex flex-col gap-1 text-left">
+                    <div className="h-5 w-[200px] bg-zinc-700 text-transparent rounded-md" />
+                    <div className="h-4 w-[200px] bg-zinc-700 text-transparent rounded-md" />
+                  </div>
+                </div>
+              </div>
+            ) : (
+              modules &&
               modules.map((module, index) => (
                 <Module
                   key={module.id}
@@ -56,7 +70,8 @@ export function Player() {
                   title={module.title}
                   amountOfLessons={module.lessons.length}
                 />
-              ))}
+              ))
+            )}
           </aside>
         </main>
       </div>
