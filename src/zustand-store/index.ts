@@ -75,3 +75,15 @@ export const useStore = create<PlayerState>((set, get) => {
     },
   }
 })
+
+export const useCurrentLesson = () => {
+  return useStore(store => {
+    const { currentLessonIndex, currentModuleIndex } = store
+
+    const currentModule = store.course?.modules[currentModuleIndex]
+
+    const currentLesson = currentModule?.lessons[currentLessonIndex]
+
+    return { currentModule, currentLesson }
+  })
+}

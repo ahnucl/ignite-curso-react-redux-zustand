@@ -3,26 +3,21 @@ import { useEffect } from 'react'
 import { Header } from '../components/Header'
 import { Module } from '../components/Module'
 import { Video } from '../components/Video'
-import { useAppDispatch, useAppSelector } from '../store'
-import { loadCourse, useCurrentLesson } from '../store/slices/player'
+import { useCurrentLesson, useStore } from '../zustand-store'
+// import { useAppDispatch, useAppSelector } from '../store'
+// import { loadCourse, useCurrentLesson } from '../store/slices/player'
 
 export function Player() {
-  const dispatch = useAppDispatch()
-
-  const modules = useAppSelector(state => {
-    const modules = state.player.course?.modules
-    // const x = 1
-    // return { modules, x } // Possível desestruturar porque não está retornar o slice inteiro
-
-    return modules
-  })
-
-  const isCourseLoading = useAppSelector(state => state.player.isLoading)
+  const { course, load, isLoading } = useStore(store => ({
+    course: store.course,
+    load: store.load,
+    isLoading: store.isLoading,
+  }))
 
   const { currentLesson } = useCurrentLesson()
 
   useEffect(() => {
-    dispatch(loadCourse())
+    load()
   }, [])
 
   useEffect(() => {
@@ -50,7 +45,7 @@ export function Player() {
           </div>
 
           <aside className="w-80 absolute top-0 bottom-0 right-0 border-l divide-y-2 divide-zinc-900 border-zinc-800 bg-zinc-900 overflow-y-scroll scrollbar-thin scrollbar-track-zinc-950 scrollbar-thumb-zinc-800">
-            {isCourseLoading ? (
+            {isLoading ? (
               <div className="animate-pulse">
                 <div className="flex w-full items-center gap-3 bg-zinc-800 p-4">
                   <div className="flex h-10 w-10 rounded-full items-center justify-center bg-zinc-700"></div>
@@ -62,8 +57,8 @@ export function Player() {
                 </div>
               </div>
             ) : (
-              modules &&
-              modules.map((module, index) => (
+              course?.modules &&
+              course.modules.map((module, index) => (
                 <Module
                   key={module.id}
                   moduleIndex={index}
